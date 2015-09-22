@@ -3,6 +3,7 @@ package yukihane.dq10remote.communication;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import yukihane.dq10remote.communication.dto.CharaSelectDto;
+import yukihane.dq10remote.communication.dto.bazaar.LargeCategoryDto;
 import yukihane.dq10remote.communication.dto.farm.FarmLoginDto;
 import yukihane.dq10remote.communication.dto.profile.StorageDto;
 import yukihane.dq10remote.communication.dto.profile.StoredItemDto;
@@ -41,6 +42,12 @@ public interface HappyService {
     StoredItemDto getStoredItemList(@Path("storageId") int storageId,
                                     @Path("storageIndex") int storageIndex)
             throws HappyServiceException;
+
+    /**
+     * @return バザー検索「種類」
+     */
+    @GET("/bazaar/largecategory/99/")
+    LargeCategoryDto getLargeCategory() throws HappyServiceException;
 
     // storageIdが100のものはdoll
 //    @GET("/profile/doll/{dollNo}/")

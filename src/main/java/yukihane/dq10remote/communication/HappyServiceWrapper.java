@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import retrofit.RetrofitError;
 import retrofit.http.Path;
 import yukihane.dq10remote.communication.dto.CharaSelectDto;
+import yukihane.dq10remote.communication.dto.bazaar.LargeCategoryDto;
 import yukihane.dq10remote.communication.dto.farm.FarmLoginDto;
 import yukihane.dq10remote.communication.dto.profile.StorageDto;
 import yukihane.dq10remote.communication.dto.profile.StoredItemDto;
@@ -88,6 +89,22 @@ public class HappyServiceWrapper implements HappyService {
             return res;
         } catch (RetrofitError e) {
             throw new HappyServiceException("getTobatsuList error", e);
+        }
+    }
+
+    @Override
+    public LargeCategoryDto getLargeCategory() throws HappyServiceException {
+        try {
+            LOGGER.info("HappyService getLargeCategory");
+            LargeCategoryDto res = service.getLargeCategory();
+            if (res.getResultCode() != 0) {
+                LOGGER.error("HappyService getLargeCategory error resultCode: {}",
+                        res.getResultCode());
+                throw new HappyServiceException(res.getResultCode());
+            }
+            return res;
+        } catch (RetrofitError e) {
+            throw new HappyServiceException("getLargeCategory error", e);
         }
     }
 
