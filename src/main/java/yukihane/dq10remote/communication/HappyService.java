@@ -4,6 +4,7 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 import yukihane.dq10remote.communication.dto.CharaSelectDto;
 import yukihane.dq10remote.communication.dto.bazaar.LargeCategoryDto;
+import yukihane.dq10remote.communication.dto.bazaar.SmallCategoryDto;
 import yukihane.dq10remote.communication.dto.farm.FarmLoginDto;
 import yukihane.dq10remote.communication.dto.profile.StorageDto;
 import yukihane.dq10remote.communication.dto.profile.StoredItemDto;
@@ -16,8 +17,7 @@ import yukihane.dq10remote.exception.HappyServiceException;
 public interface HappyService {
 
     /**
-     * アカウント内のどのキャラクタに対して操作を行うか決定します.
-     * ログイン後この操作を行わないと他の操作は正常に終了しません.
+     * アカウント内のどのキャラクタに対して操作を行うか決定します. ログイン後この操作を行わないと他の操作は正常に終了しません.
      */
     @GET("/login/characterselect/{webPcNo}/")
     CharaSelectDto characterSelect(@Path("webPcNo") long webPcNo) throws HappyServiceException;
@@ -40,22 +40,27 @@ public interface HappyService {
      */
     @GET("/profile/itemlist/{storageId}/{storageIndex}/")
     StoredItemDto getStoredItemList(@Path("storageId") int storageId,
-                                    @Path("storageIndex") int storageIndex)
-            throws HappyServiceException;
+        @Path("storageIndex") int storageIndex)
+        throws HappyServiceException;
 
+    // storageIdが100のものはdoll
+//    @GET("/profile/doll/{dollNo}/")
+    // storageIdが101のものは送った手紙
+//    @GET("/profile/postoffice/sendmailhist/")
     /**
      * @return バザー検索「種類」
      */
     @GET("/bazaar/largecategory/99/")
     LargeCategoryDto getLargeCategory() throws HappyServiceException;
 
-    // storageIdが100のものはdoll
-//    @GET("/profile/doll/{dollNo}/")
-    // storageIdが101のものは送った手紙
-//    @GET("/profile/postoffice/sendmailhist/")
+    /**
+     * @return バザー検索「種類2」
+     */
+    @GET("/bazaar/smallcategory/99/{largeCategory}/")
+    SmallCategoryDto getSmallCategory(@Path("largeCategory") int largeCategoryId)
+        throws HappyServiceException;
 
     @GET("/farm/login")
     FarmLoginDto farmLogin() throws HappyServiceException;
-
 
 }
