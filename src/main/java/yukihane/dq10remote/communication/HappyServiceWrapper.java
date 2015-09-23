@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import retrofit.RetrofitError;
 import retrofit.http.Path;
 import yukihane.dq10remote.communication.dto.CharaSelectDto;
+import yukihane.dq10remote.communication.dto.bazaar.ItemCountDto;
 import yukihane.dq10remote.communication.dto.bazaar.LargeCategoryDto;
 import yukihane.dq10remote.communication.dto.bazaar.SmallCategoryDto;
 import yukihane.dq10remote.communication.dto.farm.FarmLoginDto;
@@ -34,7 +35,7 @@ public class HappyServiceWrapper implements HappyService {
             CharaSelectDto res = service.characterSelect(webPcNo);
             if (res.getResultCode() != 0) {
                 LOGGER.error("HappyService characterSelect error webPcNo: {}, resultCode: {}",
-                        webPcNo, res.getResultCode());
+                    webPcNo, res.getResultCode());
                 throw new HappyServiceException(res.getResultCode());
             }
             return res;
@@ -50,7 +51,7 @@ public class HappyServiceWrapper implements HappyService {
             TobatsuDto res = service.getTobatsuList();
             if (res.getResultCode() != 0) {
                 LOGGER.error("HappyService getTobatsuList error resultCode: {}",
-                        res.getResultCode());
+                    res.getResultCode());
                 throw new HappyServiceException(res.getResultCode());
             }
             return res;
@@ -66,7 +67,7 @@ public class HappyServiceWrapper implements HappyService {
             StorageDto res = service.getStorageList2();
             if (res.getResultCode() != 0) {
                 LOGGER.error("HappyService getStorageList2 error resultCode: {}",
-                        res.getResultCode());
+                    res.getResultCode());
                 throw new HappyServiceException(res.getResultCode());
             }
             return res;
@@ -77,14 +78,14 @@ public class HappyServiceWrapper implements HappyService {
 
     @Override
     public StoredItemDto getStoredItemList(
-            @Path("storageId") int storageId, @Path("storageIndex") int storageIndex)
-            throws HappyServiceException {
+        @Path("storageId") int storageId, @Path("storageIndex") int storageIndex)
+        throws HappyServiceException {
         try {
             LOGGER.info("HappyService getStoredItemList id: {}, index: {}", storageId, storageIndex);
             StoredItemDto res = service.getStoredItemList(storageId, storageIndex);
             if (res.getResultCode() != 0) {
                 LOGGER.error("HappyService getStoredItemList error resultCode: {}",
-                        res.getResultCode());
+                    res.getResultCode());
                 throw new HappyServiceException(res.getResultCode());
             }
             return res;
@@ -100,7 +101,7 @@ public class HappyServiceWrapper implements HappyService {
             LargeCategoryDto res = service.getLargeCategory();
             if (res.getResultCode() != 0) {
                 LOGGER.error("HappyService getLargeCategory error resultCode: {}",
-                        res.getResultCode());
+                    res.getResultCode());
                 throw new HappyServiceException(res.getResultCode());
             }
             return res;
@@ -116,12 +117,28 @@ public class HappyServiceWrapper implements HappyService {
             SmallCategoryDto res = service.getSmallCategory(largeCategoryId);
             if (res.getResultCode() != 0) {
                 LOGGER.error("HappyService getSmallCategory error resultCode: {}",
-                        res.getResultCode());
+                    res.getResultCode());
                 throw new HappyServiceException(res.getResultCode());
             }
             return res;
         } catch (RetrofitError e) {
             throw new HappyServiceException("getSmallCategory error", e);
+        }
+    }
+
+    @Override
+    public ItemCountDto getItemCount(int largeCategoryId, int smallCategoryId) throws HappyServiceException {
+        try {
+            LOGGER.info("HappyService getItemCount");
+            ItemCountDto res = service.getItemCount(largeCategoryId, smallCategoryId);
+            if (res.getResultCode() != 0) {
+                LOGGER.error("HappyService getItemCount error resultCode: {}",
+                    res.getResultCode());
+                throw new HappyServiceException(res.getResultCode());
+            }
+            return res;
+        } catch (RetrofitError e) {
+            throw new HappyServiceException("getItemCount error", e);
         }
     }
 

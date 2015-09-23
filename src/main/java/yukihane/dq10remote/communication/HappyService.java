@@ -3,6 +3,7 @@ package yukihane.dq10remote.communication;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import yukihane.dq10remote.communication.dto.CharaSelectDto;
+import yukihane.dq10remote.communication.dto.bazaar.ItemCountDto;
 import yukihane.dq10remote.communication.dto.bazaar.LargeCategoryDto;
 import yukihane.dq10remote.communication.dto.bazaar.SmallCategoryDto;
 import yukihane.dq10remote.communication.dto.farm.FarmLoginDto;
@@ -58,6 +59,15 @@ public interface HappyService {
      */
     @GET("/bazaar/smallcategory/99/{largeCategory}/")
     SmallCategoryDto getSmallCategory(@Path("largeCategory") int largeCategoryId)
+        throws HappyServiceException;
+
+    /**
+     * @return バザー検索
+     */
+    @GET("/bazaar/itemcount/99/{largeCategory}/{smallCategory}/")
+    ItemCountDto getItemCount(
+        @Path("largeCategory") int largeCategoryId,
+        @Path("smallCategory") int smallCategoryId)
         throws HappyServiceException;
 
     @GET("/farm/login")
